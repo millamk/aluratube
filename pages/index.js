@@ -16,7 +16,7 @@ function HomePage() {
         }}
       >
         <Menu />
-        <Header />
+        <Header bannerUrl={config.banner} />
         <Timeline playlists={config.playlists}>Conteúdo</Timeline>
       </div>
     </>
@@ -26,13 +26,12 @@ function HomePage() {
 export default HomePage;
 
 const StyledHeader = styled.div`
-  img {
+  .user-img {
     width: 80px;
     height: 80px;
     border-radius: 50%;
   }
   .user-info {
-    margin-top: 58px;
     display: flex;
     align-items: center;
     width: 100%;
@@ -41,12 +40,27 @@ const StyledHeader = styled.div`
   }
 `;
 
-function Header() {
+const StyleBanner = styled.div`
+  .banner-img {
+    height: 320px;
+    width: 100%;
+    object-fit: cover;
+    object-position: 20% 15%;
+  }
+`;
+
+function Header(props) {
   return (
     <StyledHeader>
-      {/* <img src="banner" alt="" /> */}
+      <StyleBanner>
+        <img className="banner-img" src={props.bannerUrl} alt="" />
+      </StyleBanner>
       <section className="user-info">
-        <img src={`https://github.com/${config.github}.png`} alt="" />
+        <img
+          className="user-img"
+          src={`https://github.com/${config.github}.png`}
+          alt=""
+        />
         <div>
           <h2>{config.name}</h2>
           <p>{config.job}</p>
