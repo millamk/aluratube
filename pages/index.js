@@ -18,6 +18,7 @@ function HomePage() {
         <Menu />
         <Header bannerUrl={config.banner} />
         <Timeline playlists={config.playlists}>Conteúdo</Timeline>
+        <Favorites fav={config.favorites} />
       </div>
     </>
   );
@@ -93,5 +94,51 @@ function Timeline(props) {
         );
       })}
     </StyledTimeline>
+  );
+}
+
+const StyledFavorites = styled.div`
+  padding-left: 32px;
+  h2 {
+    font-size: 16px;
+    margin-bottom: 16px;
+    text-transform: capitalize;
+  }
+  img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+  }
+  a {
+    text-align: center;
+  }
+  .fav {
+    display: flex;
+    gap: 8px;
+  }
+  p {
+    margin-top: 8px;
+    font-size: 14px;
+    color: black;
+  }
+`;
+
+function Favorites(props) {
+  return (
+    <StyledFavorites>
+      <section>
+        <h2>AluraTubes Favoritos</h2>
+        <div className="fav">
+          {props.fav.users.map(user => {
+            return (
+              <a href={user.url}>
+                <img src={`https://github.com/${user.github}.png`} alt="" />
+                <p>@{user.github}</p>
+              </a>
+            );
+          })}
+        </div>
+      </section>
+    </StyledFavorites>
   );
 }

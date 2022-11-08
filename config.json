@@ -131,5 +131,17 @@
         "thumb": "https://img.youtube.com/vi/0JWMVc1CqpA/hqdefault.jpg"
       }
     ]
+  },
+  "favorites": {
+    "users": [
+      {
+        "url": "https://github.com/omariosouto",
+        "github": "omariosouto"
+      },
+      {
+        "url": "https://github.com/peas",
+        "github": "peas"
+      }
+    ]
   }
 }
