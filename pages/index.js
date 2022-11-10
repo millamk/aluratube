@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import config from "../config.json";
 import styled from "styled-components";
 import { CSSReset } from "../src/components/CSSReset";
@@ -5,6 +6,8 @@ import Menu from "../src/components/Menu";
 import { StyledTimeline } from "../src/components/Timeline";
 
 function HomePage() {
+  const [value, setValue] = useState('')
+
   return (
     <>
       <CSSReset />
@@ -15,9 +18,11 @@ function HomePage() {
           flex: 1,
         }}
       >
-        <Menu />
+        <Menu searchValue={value} setSearchValue={setValue} />
         <Header bannerUrl={config.banner} />
-        <Timeline playlists={config.playlists}>Conteúdo</Timeline>
+        <Timeline searchValue={value} playlists={config.playlists}>
+          Conteúdo
+        </Timeline>
         <Favorites fav={config.favorites} />
       </div>
     </>
@@ -71,19 +76,23 @@ function Header(props) {
   );
 }
 
-function Timeline(props) {
+function Timeline({ searchValue, ...props }) {
   const playlistNames = Object.keys(props.playlists);
   return (
     <StyledTimeline>
       {playlistNames.map(playlistName => {
         const videos = props.playlists[playlistName];
         return (
-          <section>
+          <section key={playlistName}>
             <h2>{playlistName}</h2>
             <div>
-              {videos.map(video => {
+              {videos.filter((video) => {
+                const titleNormalized = video.title.toLowerCase();
+                const searchValueNormalized = searchValue.toLowerCase();
+                return titleNormalized.includes(searchValueNormalized)
+              }).map(video => {
                 return (
-                  <a href={video.url}>
+                  <a key={video.url} href={video.url}>
                     <img src={video.thumb} alt="" />
                     <span>{video.title}</span>
                   </a>
@@ -131,7 +140,7 @@ function Favorites(props) {
         <div className="fav">
           {props.fav.users.map(user => {
             return (
-              <a href={user.url}>
+              <a key={user.url} href={user.url}>
                 <img src={`https://github.com/${user.github}.png`} alt="" />
                 <p>@{user.github}</p>
               </a>
